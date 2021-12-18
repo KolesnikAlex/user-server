@@ -1,0 +1,21 @@
+version: "3.4"
+
+services:
+
+  postgres:
+    image: postgres:latest
+    container_name: postgresUserdb
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_HOST=localhost
+      - POSTGRES_DB=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - /var/local/data/postgresdb:/var/lib/postgresql/data
+
+volumes:
+  redis_data:
+    driver: local
