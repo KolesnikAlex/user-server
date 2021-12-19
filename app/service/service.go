@@ -16,10 +16,16 @@ type User struct {
 	Password string
 }
 
+type Service struct {
+	repo UserService
+}
+
+
 // Service defines the interface exposed by this package.
-type Service interface {
+type UserService interface {
 	GetUser(ctx context.Context, id int64) (User, error)
 	AddUser(ctx context.Context, user User) (error)
 	RemoveUser(ctx context.Context, id int64) (error)
 	UpdateUser(ctx context.Context, user User) (error)
 }
+

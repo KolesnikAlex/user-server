@@ -1,11 +1,14 @@
 package main
 
-import "user-server/app"
+import (
+	"user-server/app"
+	"user-server/http"
+)
 
 func main() {
 	app := app.New()
 
-	//http.Setup()
+	http.Setup()
 
 	app.Run()
 }

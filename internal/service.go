@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"context"
 	"github.com/phuslu/log"
 	"user-server/app/service"
 )
@@ -16,8 +15,8 @@ func newService(service service.Service) *Service {
 	}
 }
 
-func (s Service) GetUser(ctx context.Context, id int64) (service.User, error) {
-	res, err := s.userRepo.GetUser(ctx, id)
+func (s Service) GetUser(id int64) (service.User, error) {
+	res, err := s.userRepo.GetUser(id)
 	if err != nil {
 		log.Error().Err(err).Msg("errService GetUser")
 		return service.User{}, err
@@ -25,8 +24,8 @@ func (s Service) GetUser(ctx context.Context, id int64) (service.User, error) {
 	return res, err
 }
 
-func (s Service) AddUser(ctx context.Context, user service.User) error {
-	err := s.userRepo.AddUser(ctx, user)
+func (s Service) AddUser(user service.User) error {
+	err := s.userRepo.AddUser(user)
 	if err != nil {
 		log.Error().Err(err).Msg("errService AddUser")
 		return err
@@ -34,8 +33,8 @@ func (s Service) AddUser(ctx context.Context, user service.User) error {
 	return err
 }
 
-func (s Service) RemoveUser(ctx context.Context, id int64) error {
-	err := s.userRepo.RemoveUser(ctx, id)
+func (s Service) RemoveUser(id int64) error {
+	err := s.userRepo.RemoveUser(id)
 	if err != nil {
 		log.Error().Err(err).Msg("errService RemoveUser")
 		return err
@@ -43,8 +42,8 @@ func (s Service) RemoveUser(ctx context.Context, id int64) error {
 	return err
 }
 
-func (s Service) UpdateUser(ctx context.Context, user service.User) error {
-	err := s.userRepo.UpdateUser(ctx, user)
+func (s Service) UpdateUser(user service.User) error {
+	err := s.userRepo.UpdateUser(user)
 	if err != nil {
 		log.Error().Err(err).Msg("errService UpdateUser")
 		return err

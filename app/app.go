@@ -17,7 +17,7 @@ type (
 		Config         *config.Config
 		Echo           *echo.Echo
 		PostgresClient *sqlx.DB
-		HTTPClient     *http.Client
+	//	HTTPClient     *http.Client
 	}
 )
 
