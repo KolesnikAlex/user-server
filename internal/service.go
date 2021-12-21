@@ -1,5 +1,5 @@
 package internal
-
+/*
 import (
 	"github.com/phuslu/log"
 	"user-server/app/service"
@@ -51,3 +51,4 @@ func (s Service) UpdateUser(user service.User) error {
 	return err
 }
 
+*/

@@ -7,9 +7,9 @@ option go_package = "github.com/user-server/grpc";
 
 service GrpcUserService {
     rpc GetUser(Id) returns (User) {}
-    rpc AddUser(User) returns (Err) {}
-    rpc RemoveUser(Id) returns (Err) {}
-    rpc UpdateUser(User) returns (Err) {}
+    rpc AddUser(User) returns (Request) {}
+    rpc RemoveUser(Id) returns (Request) {}
+    rpc UpdateUser(User) returns (Request) {}
 
 }
 
@@ -24,6 +24,4 @@ message Id {
     int32 id = 1;
 }
 
-message Err {
-    string err = 1;
-}
+message Request {}
