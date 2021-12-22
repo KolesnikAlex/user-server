@@ -23,8 +23,8 @@ func NewUserServiceController(userService service.UserService) GrpcUserServiceSe
 }
 
 // GetUsers calls the core service's GetUsers method and maps the result to a grpc service response.
-func (ctlr *userServiceController) GetUser(ctx context.Context, req *Id) (resp *User, err error) {
-	result, err := ctlr.userService.GetUser(req.GetId())
+func (ctlr *userServiceController) GetUser(req *Id) (resp *User, err error) {
+	result, err := ctlr.userService.GetUser(int64(req.GetId()))
 	if err != nil {
 		return
 	}

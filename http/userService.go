@@ -14,14 +14,15 @@ import (
 )
 
 func Setup() {
-	routes(app.App.Echo, app.App.Config, app.App.PostgresClient)
+	//routes(app.App.Echo, app.App.Config, app.App.PostgresClient)
+	NewUserHandler(app.App.Config, app.App.PostgresClient).Routes(app.App.Echo)
 }
 
-func routes(e *echo.Echo, config *config.Config, postgresClient *sqlx.DB) {
+/*func routes(e *echo.Echo, config *config.Config, postgresClient *sqlx.DB) {
 
 	NewUserHandler(config, postgresClient).Routes(e)
 
-}
+}*/
 
 
 type UserHandler struct {
@@ -45,9 +46,12 @@ func (h UserHandler) Routes(e *echo.Echo) {
 }
 
 func (h UserHandler) GetUser(c echo.Context) error {
-	id := strToInt(c.Param("id"))
-
-	res, err := h.service.GetUser(c.Request().Context(), int64(id))
+	id, err := strconv.Atoi(c.Param("id"))  //strToInt(c.Param("id"))
+	if err != nil {
+		log.Error().Err(err).Msgf("Don't convert id to int")
+		return err
+	}
+	res, err := h.service.GetUser(int64(id))
 	if err != nil {
 		log.Error().Err(err).Msg("(http) err get user")
 		return c.String(http.StatusBadRequest, err.Error())
@@ -65,7 +69,7 @@ func (h UserHandler) AddUser(c echo.Context) error {
 		return c.String(http.StatusBadRequest, err.Error())
 	}
 
-	err = h.service.AddUser(c.Request().Context(), user)
+	err = h.service.AddUser(user)
 	if err != nil {
 		log.Error().Err(err).Msg("invalid save user")
 		return c.String(http.StatusBadRequest, err.Error())
@@ -76,7 +80,7 @@ func (h UserHandler) AddUser(c echo.Context) error {
 
 func (h UserHandler) RemoveUser(c echo.Context) error {
 	id := strToInt(c.Param("id"))
-	err := h.service.RemoveUser(c.Request().Context(), int64(id))
+	err := h.service.RemoveUser(int64(id))
 	if err != nil {
 		log.Error().Err(err).Msg("invalid delete user")
 		return c.String(http.StatusBadRequest, err.Error())
@@ -92,7 +96,7 @@ func (h UserHandler) UpdateUser(c echo.Context) error {
 		return c.String(http.StatusBadRequest, err.Error())
 	}
 
-	err = h.service.UpdateUser(c.Request().Context(), user)
+	err = h.service.UpdateUser(user)
 	if err != nil {
 		log.Error().Err(err).Msg("invalid save user")
 		return c.String(http.StatusBadRequest, err.Error())

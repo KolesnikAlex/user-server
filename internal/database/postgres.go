@@ -1,7 +1,6 @@
 package database
 
 import (
-	"context"
 	"github.com/jmoiron/sqlx"
 	"user-server/app/service"
 )
@@ -18,7 +17,7 @@ type SQLRepository struct {
 	db *sqlx.DB
 }
 
-func (rep SQLRepository) GetUser(ctx context.Context, id int64) (result service.User, err error) {
+func (rep SQLRepository) GetUser(id int64) (result service.User, err error) {
 	err = rep.db.Get(&result, getUserQuery(), id)
 	if err != nil {
 		//log.Error().Err(err).Msg("err get coinsID from postgres")
@@ -27,7 +26,7 @@ func (rep SQLRepository) GetUser(ctx context.Context, id int64) (result service.
 	return result, err
 }
 
-func (rep SQLRepository) AddUser(ctx context.Context, user service.User) error {
+func (rep SQLRepository) AddUser(user service.User) error {
 	_, err := rep.db.Exec(getAddUserQuery(), user.ID, user.Name, user.Login, user.Password)
 	if err != nil {
 		//log.Error().Err(err).Msg("err add user to postgres")
@@ -36,7 +35,7 @@ func (rep SQLRepository) AddUser(ctx context.Context, user service.User) error {
 	return err
 }
 
-func (rep SQLRepository) RemoveUser(ctx context.Context, id int64) error {
+func (rep SQLRepository) RemoveUser(id int64) error {
 	_, err := rep.db.Exec(getRemoveUserQuery(), id)
 	if err != nil {
 		//log.Error().Err(err).Msg("err del user from postgres")
@@ -45,7 +44,7 @@ func (rep SQLRepository) RemoveUser(ctx context.Context, id int64) error {
 	return err
 }
 
-func (rep SQLRepository) UpdateUser(ctx context.Context, user service.User) (err error) {
+func (rep SQLRepository) UpdateUser(user service.User) (err error) {
 	_, err = rep.db.Exec(getUpdateUserQuery(), user.Name, user.Login, user.Password, user.ID)
 	if err != nil {
 		//log.Error().Err(err).Msg("err UpdateUser in postgres")

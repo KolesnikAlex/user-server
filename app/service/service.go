@@ -1,7 +1,6 @@
 package service
 
 import (
-	"context"
 	"errors"
 )
 
@@ -23,9 +22,9 @@ type Service struct {
 
 // Service defines the interface exposed by this package.
 type UserService interface {
-	GetUser(ctx context.Context, id int64) (User, error)
-	AddUser(ctx context.Context, user User) (error)
-	RemoveUser(ctx context.Context, id int64) (error)
-	UpdateUser(ctx context.Context, user User) (error)
+	GetUser(id int64) (User, error)
+	AddUser(user User) (error)
+	RemoveUser(id int64) (error)
+	UpdateUser(user User) (error)
 }
 
