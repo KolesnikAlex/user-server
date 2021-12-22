@@ -19,9 +19,9 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GrpcUserServiceClient interface {
 	GetUser(ctx context.Context, in *Id, opts ...grpc.CallOption) (*User, error)
-	AddUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Err, error)
-	RemoveUser(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Err, error)
-	UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Err, error)
+	AddUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Request, error)
+	RemoveUser(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Request, error)
+	UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Request, error)
 }
 
 type grpcUserServiceClient struct {
@@ -41,8 +41,8 @@ func (c *grpcUserServiceClient) GetUser(ctx context.Context, in *Id, opts ...grp
 	return out, nil
 }
 
-func (c *grpcUserServiceClient) AddUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Err, error) {
-	out := new(Err)
+func (c *grpcUserServiceClient) AddUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Request, error) {
+	out := new(Request)
 	err := c.cc.Invoke(ctx, "/grpc.GrpcUserService/AddUser", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -50,8 +50,8 @@ func (c *grpcUserServiceClient) AddUser(ctx context.Context, in *User, opts ...g
 	return out, nil
 }
 
-func (c *grpcUserServiceClient) RemoveUser(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Err, error) {
-	out := new(Err)
+func (c *grpcUserServiceClient) RemoveUser(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Request, error) {
+	out := new(Request)
 	err := c.cc.Invoke(ctx, "/grpc.GrpcUserService/RemoveUser", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -59,8 +59,8 @@ func (c *grpcUserServiceClient) RemoveUser(ctx context.Context, in *Id, opts ...
 	return out, nil
 }
 
-func (c *grpcUserServiceClient) UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Err, error) {
-	out := new(Err)
+func (c *grpcUserServiceClient) UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Request, error) {
+	out := new(Request)
 	err := c.cc.Invoke(ctx, "/grpc.GrpcUserService/UpdateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -73,9 +73,9 @@ func (c *grpcUserServiceClient) UpdateUser(ctx context.Context, in *User, opts .
 // for forward compatibility
 type GrpcUserServiceServer interface {
 	GetUser(context.Context, *Id) (*User, error)
-	AddUser(context.Context, *User) (*Err, error)
-	RemoveUser(context.Context, *Id) (*Err, error)
-	UpdateUser(context.Context, *User) (*Err, error)
+	AddUser(context.Context, *User) (*Request, error)
+	RemoveUser(context.Context, *Id) (*Request, error)
+	UpdateUser(context.Context, *User) (*Request, error)
 	mustEmbedUnimplementedGrpcUserServiceServer()
 }
 
@@ -86,13 +86,13 @@ type UnimplementedGrpcUserServiceServer struct {
 func (UnimplementedGrpcUserServiceServer) GetUser(context.Context, *Id) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
-func (UnimplementedGrpcUserServiceServer) AddUser(context.Context, *User) (*Err, error) {
+func (UnimplementedGrpcUserServiceServer) AddUser(context.Context, *User) (*Request, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUser not implemented")
 }
-func (UnimplementedGrpcUserServiceServer) RemoveUser(context.Context, *Id) (*Err, error) {
+func (UnimplementedGrpcUserServiceServer) RemoveUser(context.Context, *Id) (*Request, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveUser not implemented")
 }
-func (UnimplementedGrpcUserServiceServer) UpdateUser(context.Context, *User) (*Err, error) {
+func (UnimplementedGrpcUserServiceServer) UpdateUser(context.Context, *User) (*Request, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
 func (UnimplementedGrpcUserServiceServer) mustEmbedUnimplementedGrpcUserServiceServer() {}

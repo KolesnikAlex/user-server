@@ -6,7 +6,7 @@ func getAddUserQuery() string {
 			ON CONFLICT (id) DO UPDATE 
 			SET 
 				name = $2, 
-				login = $3
+				login = $3,
 				password = $4;`
 }
 

@@ -2,6 +2,7 @@ package database
 
 import (
 	"github.com/jmoiron/sqlx"
+	"github.com/phuslu/log"
 	"user-server/app/service"
 )
 
@@ -27,9 +28,10 @@ func (rep SQLRepository) GetUser(id int64) (result service.User, err error) {
 }
 
 func (rep SQLRepository) AddUser(user service.User) error {
+	//log.Info().Msg(user.Name+" "+user.Login+" "+user.Password)
 	_, err := rep.db.Exec(getAddUserQuery(), user.ID, user.Name, user.Login, user.Password)
 	if err != nil {
-		//log.Error().Err(err).Msg("err add user to postgres")
+		log.Error().Err(err).Msg("err add user to postgres")
 		return err
 	}
 	return err

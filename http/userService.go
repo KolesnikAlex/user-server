@@ -71,7 +71,7 @@ func (h UserHandler) AddUser(c echo.Context) error {
 
 	err = h.service.AddUser(user)
 	if err != nil {
-		log.Error().Err(err).Msg("invalid save user")
+		log.Error().Err(err).Msg("http invalid save user")
 		return c.String(http.StatusBadRequest, err.Error())
 	}
 

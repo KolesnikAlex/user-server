@@ -14,14 +14,14 @@ service GrpcUserService {
 }
 
 message User {
-    int32 id = 1;
+    int64 id = 1;
     string name = 2;
     string login = 3;
     string password = 4;
 }
 
 message Id {
-    int32 id = 1;
+    int64 id = 1;
 }
 
 message Request {}
