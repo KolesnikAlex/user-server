@@ -8,8 +8,14 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/phuslu/log"
 	"github.com/pressly/goose/v3"
+	"net"
 	"net/http"
+	"os"
 	"user-server/config"
+	myGrpc "user-server/grpc"
+	"user-server/internal/database"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type (
@@ -17,6 +23,7 @@ type (
 		Config         *config.Config
 		Echo           *echo.Echo
 		PostgresClient *sqlx.DB
+		grpcController myGrpc.GrpcUserServiceServer
 	//	HTTPClient     *http.Client
 	}
 )
@@ -33,6 +40,7 @@ func New() *Application {
 	App.Config = config.LoadConfig()
 	App.setupEcho()
 	App.setupPostgresClient()
+	App.setupGrpcController()
 
 	return App
 }
@@ -77,9 +85,32 @@ func setupEmbedMigrations(dbConnect string) error {
 	return nil
 }
 
+func (app *Application) setupGrpcController() {
+	sqlRepo := database.NewSQLRepo(app.PostgresClient)
+	app.grpcController = myGrpc.NewUserServiceController(sqlRepo)
+
+}
+
 func (app *Application) Run() {
-	log.Info().Msgf("listening on %s", app.Config.Server.Port)
-	err := http.ListenAndServe(app.Config.Server.Port, app.Echo)
+	//starting http server
+	log.Info().Msgf("listening on %s", app.Config.HttpServer.Port)
+	err := http.ListenAndServe(app.Config.HttpServer.Port, app.Echo)
+	if err != nil {
+		panic(err)
+	}
+
+	//starting grpc server
+	server := grpc.NewServer()
+	myGrpc.RegisterGrpcUserServiceServer(server, app.grpcController)
+	reflection.Register(server)
+
+	con, err := net.Listen("tcp", app.Config.GrpcServer.Port)
+	if err != nil {
+		panic(err)
+	}
+
+	log.Printf("Starting gRPC server on %s...\n", con.Addr().String())
+	err = server.Serve(con)
 	if err != nil {
 		panic(err)
 	}

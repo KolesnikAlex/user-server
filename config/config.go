@@ -6,9 +6,14 @@ import (
 )
 
 type Config struct {
-	Server   struct {
+	HttpServer struct {
 		Host string `envconfig:"SERVER_HOST"`
 		Port string `envconfig:"SERVER_PORT" default:":8070"`
+	}
+
+	GrpcServer struct {
+		Host string `envconfig:"SERVER_HOST"`
+		Port string `envconfig:"SERVER_PORT" default:":9000"`
 	}
 
 
