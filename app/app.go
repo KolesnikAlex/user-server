@@ -10,12 +10,13 @@ import (
 	"github.com/pressly/goose/v3"
 	"net"
 	"net/http"
-	"os"
 	"user-server/config"
 	myGrpc "user-server/grpc"
 	"user-server/internal/database"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	grpcUserService "github.com/KolesnikAlex/user-service-proto/grpc"
+
 )
 
 type (
@@ -23,7 +24,7 @@ type (
 		Config         *config.Config
 		Echo           *echo.Echo
 		PostgresClient *sqlx.DB
-		grpcController myGrpc.GrpcUserServiceServer
+		grpcController grpcUserService.GrpcUserServiceServer
 	//	HTTPClient     *http.Client
 	}
 )
@@ -101,7 +102,7 @@ func (app *Application) Run() {
 
 	//starting grpc server
 	server := grpc.NewServer()
-	myGrpc.RegisterGrpcUserServiceServer(server, app.grpcController)
+	grpcUserService.RegisterGrpcUserServiceServer(server, app.grpcController)
 	reflection.Register(server)
 
 	con, err := net.Listen("tcp", app.Config.GrpcServer.Port)

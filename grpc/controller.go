@@ -2,7 +2,7 @@ package grpc
 
 import (
 	"context"
-	"encoding/json"
+	//"encoding/json"
 	"log"
 	"user-server/app/service"
 	grpcUserService "github.com/KolesnikAlex/user-service-proto/grpc"
