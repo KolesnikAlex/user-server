@@ -15,10 +15,10 @@ type User struct {
 	Password string
 }
 
-type Service struct {
+/*type Service struct {
 	repo UserService
 }
-
+*/
 
 // Service defines the interface exposed by this package.
 type UserService interface {

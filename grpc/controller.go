@@ -2,10 +2,10 @@ package grpc
 
 import (
 	"context"
+	grpcUserService "github.com/KolesnikAlex/user-service-proto/grpc"
 	//"encoding/json"
 	"log"
-	"user-server/app/service"
-	grpcUserService "github.com/KolesnikAlex/user-service-proto/grpc"
+	"github.com/KolesnikAlex/user-server/app/service"
 )
 
 // userServiceController implements the gRPC UserServiceServer interface.
@@ -70,22 +70,22 @@ func (ctlr *userServiceController) UpdateUser(ctx context.Context, grpcUser *grp
 
 
 // marshalUser marshals a business object User into a gRPC layer User.
-func marshalUser(u *service.User) *grpcUserService.User {
+func marshalUser(localUser *service.User) *grpcUserService.User {
 	return &grpcUserService.User{
-		Id: u.ID,
-		Name:     u.Name,
-		Login:    u.Login,
-		Password: u.Password,
+		Id:       localUser.ID,
+		Name:     localUser.Name,
+		Login:    localUser.Login,
+		Password: localUser.Password,
 	}
 }
 
 // unMarshalUser unmarshals a gRPC layer User into a business object User.
-func unMarshalUser(u *grpcUserService.User) service.User {
+func unMarshalUser(grpcUser *grpcUserService.User) service.User {
 	return service.User{
-		ID: u.Id,
-		Name:     u.Name,
-		Login:    u.Login,
-		Password: u.Password,
+		ID:       grpcUser.Id,
+		Name:     grpcUser.Name,
+		Login:    grpcUser.Login,
+		Password: grpcUser.Password,
 	}
 }
 

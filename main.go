@@ -1,8 +1,8 @@
 package main
 
 import (
-	"user-server/app"
-	"user-server/http"
+	"github.com/KolesnikAlex/user-server/app"
+	"github.com/KolesnikAlex/user-server/http"
 )
 
 func main() {

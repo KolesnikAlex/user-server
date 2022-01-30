@@ -7,10 +7,10 @@ import (
 	"github.com/phuslu/log"
 	"net/http"
 	"strconv"
-	"user-server/app"
-	"user-server/app/service"
-	"user-server/config"
-	"user-server/internal/database"
+	"github.com/KolesnikAlex/user-server/app"
+	"github.com/KolesnikAlex/user-server/app/service"
+	"github.com/KolesnikAlex/user-server/config"
+	"github.com/KolesnikAlex/user-server/internal/database"
 )
 
 func Setup() {

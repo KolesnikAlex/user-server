@@ -3,7 +3,7 @@ package database
 import (
 	"github.com/jmoiron/sqlx"
 	"github.com/phuslu/log"
-	"user-server/app/service"
+	"github.com/KolesnikAlex/user-server/app/service"
 )
 
 func NewSQLRepo(db *sqlx.DB) *SQLRepository {
