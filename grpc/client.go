@@ -6,8 +6,10 @@ import (
 	"log"
 	"time"
 
-	grpcUserService "github.com/KolesnikAlex/user-service-proto/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+
 	localUserService "github.com/KolesnikAlex/user-server/app/service"
+	grpcUserService "github.com/KolesnikAlex/user-service-proto/grpc"
 	"google.golang.org/grpc"
 )
 
@@ -20,7 +22,8 @@ type GrpcService struct {
 
 // NewGRPCService creates a new gRPC user service connection using the specified connection string.
 func NewGRPCService(connString string) (*GrpcService, error) {
-	conn, err := grpc.Dial(connString, grpc.WithInsecure())
+	// conn, err := grpc.Dial(connString, grpc.WithInsecure())
+	conn, err := grpc.Dial(connString, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("error connection to user-server")
 		return nil, err

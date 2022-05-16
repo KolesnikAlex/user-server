@@ -10,5 +10,10 @@ func main() {
 
 	http.Setup()
 
-	app.Run()
+	go app.RunHTTP()
+
+	go app.RunGRPC()
+
+	<-app.ServerOk
+	<-app.ServerOk
 }

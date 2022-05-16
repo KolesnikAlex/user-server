@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
 
-  postgres:
+  postgresUserdb:
     image: postgres:latest
     container_name: postgresUserdb
     restart: always
@@ -10,11 +10,11 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_HOST=localhost
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=postgresUserdb
     ports:
-      - '5432:5432'
-    volumes:
-      - /var/local/data/postgresdb:/var/lib/postgresql/data
+      - '5430:5432'
+    #volumes:
+    #  - /var/local/data/postgresdb:/var/lib/postgresql/data
 
 volumes:
   redis_data:

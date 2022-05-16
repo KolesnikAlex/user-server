@@ -2,19 +2,20 @@ package http
 
 import (
 	"fmt"
-	"github.com/jmoiron/sqlx"
-	"github.com/labstack/echo/v4"
-	"github.com/phuslu/log"
 	"net/http"
 	"strconv"
+
 	"github.com/KolesnikAlex/user-server/app"
 	"github.com/KolesnikAlex/user-server/app/service"
 	"github.com/KolesnikAlex/user-server/config"
 	"github.com/KolesnikAlex/user-server/internal/database"
+	"github.com/jmoiron/sqlx"
+	"github.com/labstack/echo/v4"
+	"github.com/phuslu/log"
 )
 
 func Setup() {
-	//routes(app.App.Echo, app.App.Config, app.App.PostgresClient)
+	// routes(app.App.Echo, app.App.Config, app.App.PostgresClient)
 	NewUserHandler(app.App.Config, app.App.PostgresClient).Routes(app.App.Echo)
 }
 
@@ -46,7 +47,7 @@ func (h UserHandler) Routes(e *echo.Echo) {
 }
 
 func (h UserHandler) GetUser(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))  //strToInt(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))  // strToInt(c.Param("id"))
 	if err != nil {
 		log.Error().Err(err).Msgf("Don't convert id to int")
 		return err

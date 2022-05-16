@@ -1,20 +1,20 @@
 package database
 
 import (
+	"github.com/KolesnikAlex/user-server/app/service"
 	"github.com/jmoiron/sqlx"
 	"github.com/phuslu/log"
-	"github.com/KolesnikAlex/user-server/app/service"
 )
 
 func NewSQLRepo(db *sqlx.DB) *SQLRepository {
 	return &SQLRepository{
-		//logger: l,
+		// logger: l,
 		db: db,
 	}
 }
 
 type SQLRepository struct {
-	//logger *zap.SugaredLogger
+	// logger *zap.SugaredLogger
 	db *sqlx.DB
 }
 
@@ -28,7 +28,7 @@ func (rep SQLRepository) GetUser(id int64) (result service.User, err error) {
 }
 
 func (rep SQLRepository) AddUser(user service.User) error {
-	//log.Info().Msg(user.Name+" "+user.Login+" "+user.Password)
+	// log.Info().Msg(user.Name+" "+user.Login+" "+user.Password)
 	_, err := rep.db.Exec(getAddUserQuery(), user.ID, user.Name, user.Login, user.Password)
 	if err != nil {
 		log.Error().Err(err).Msg("err add user to postgres")
